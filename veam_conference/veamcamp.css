@@ -1,0 +1,229 @@
+@charset "UTF-8";
+/*UA Reset*/
+body, h1, h2, ol, p {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+/*Typography*/
+:root {
+    font-size: 62.5%; /*통상적인 브라우저에서 폰트크기를 16px이라고 본다 그래서 10px을 의미*/
+}
+
+body {
+    font-size: 1.4rem; /*10px의 1.4배 = 14px*/
+}
+
+h1, h2 {
+    /*body의 폰트설정을 상속*/
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/*Colors*/
+:root {
+    --background-color: midnightblue;
+    --normal-color: dodgerblue;
+    --primary-color: lightgreen;
+    --secondary-color: salmon;
+    --light-color: skyblue;
+}
+
+/*Layouts*/
+.wrapper {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/*Components*/
+body {
+    background-color: var(--background-color);
+    color: var(--normal-color); /*foreground-color*/
+}
+
+.header {
+    display: flex;
+    padding: 2rem 0; /*후에 폰트사이즈가 조정됐을 때 간격도 같이 조정되니까 유지보수에 편리*/
+    align-items: center;
+}
+
+.header-title {
+    font-size: 8rem;
+    font-family: 'Bebas Neue', cursive;
+    line-height: 1;
+    color: var(--secondary-color);
+}
+
+.header-title strong {
+    display: block;
+    color: var(--primary-color);
+}
+
+.header-meta {
+    /*부모*/
+    font-size: 2rem;
+    display: flex; /*자식인 가상요소를 가로배치하기 위해 인라인 상태가 아니도록*/
+    align-items: center;
+}
+
+.header-meta::before {
+    /*그저 시각적인 요소를 위해 마크업을 하는 것은 웹표준에 맞지 않으니 가상요소 사용*/
+    /*자식*/
+    /*처음에 인라인 요소*/
+    content: ' ';
+    margin: 0 2em;
+    background-color: currentColor; /*부모의 foreground-color를 받아온다. inherit하면 안됨*/
+    width: 2em; /*폰트사이즈에 비례하기 위해 em단위 사용*/
+    height: 2px;
+}
+
+.timeline li {
+    border-radius: 4px;
+}
+
+.timeline li:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.parts {
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.parts_lunch {
+    padding: 4rem 0;
+    margin: 4rem 0;
+}
+
+.parts_lunch .parts-agenda h2{
+    color: var(--secondary-color);
+}
+
+.parts-times {
+    width: 30%;
+    max-width: 14em;
+    flex-shrink: 0;/*줄어들 때 정해둔 width보다 작아지지 않도록*/
+    display: flex;
+    justify-content: center;
+    color: var(--light-color);
+}
+
+.parts-times span {
+    margin: 0 0.2em;/*왜 rem이 아닌 em을 썻을까?*/
+}
+
+.parts-contents {  
+    display: flex;
+    align-items: center;
+}
+
+.parts-profile {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px 50% 50% 4px;
+    box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.2);
+}
+
+.parts-agenda {
+    padding: 0 2.4rem;
+    font-size: 2rem;
+}
+
+.parts-agenda p {
+    margin: 8px 0;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+}
+
+.parts-agenda h2 {
+    color: var(--primary-color);
+    font-size: 3.2rem;
+    line-height: 1.1;/*단위 없이 지정하면 폰트사이즈에 비례하게 계산되어짐*/
+}
+
+.parts-role {
+    color: var(--normal-color);
+    /*자식요소를 인라인 요소가 아니도록*/
+    display: flex;
+    align-items: center;
+}
+
+.parts-role::before {
+    content: ' ';
+    flex-shrink: 0;
+    /*인라인 요소라 width, height이 처음에 먹히지 않음*/
+    width: 0.4em;
+    height: 0.4em;
+    margin: 0 0.6em;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+
+@media ( max-width: 720px ) {
+    :root {
+        font-size: 48%;
+    }
+
+    .header {
+        display: block;
+        padding: 4rem 0;
+    }
+
+    .header-meta {
+        display: block;
+        /*이 때 :before은 인라인 요소로 돌아간다*/
+    }
+
+
+    .header-meta::before {
+        display: block;
+        margin: 2rem 0;
+    }
+
+    .timeline li {
+        background-color: rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .parts_lunch {
+        padding: 2rem 0;
+        margin: 0;
+    }
+
+    .parts-times {
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 1rem 0;
+        width: 6em;
+        align-self: flex-start;
+        border-radius: 0 40px 40px 0;
+    }
+
+    .parts-profile {
+        display: none;
+    }
+
+    .parts-agenda p {
+        display: block;
+    }
+
+    .parts-role::before {
+        display: none;
+    }
+
+    .contents {
+        margin: 0 -4px;
+    }
+}
